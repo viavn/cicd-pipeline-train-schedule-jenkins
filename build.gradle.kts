@@ -21,7 +21,7 @@ node {
     npmVersion.set("")
     npmInstallCommand.set("install")
     distBaseUrl.set("https://nodejs.org/dist")
-    download.set(false)
+    download.set(true)
     workDir.set(file("${project.projectDir}/.cache/nodejs"))
     npmWorkDir.set(file("${project.projectDir}/.cache/npm"))
     nodeProjectDir.set(file("${project.projectDir}"))
