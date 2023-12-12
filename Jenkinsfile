@@ -32,9 +32,11 @@ pipeline {
             }
             steps {
                 echo 'Starting to push docker image to registry'
-                docker.withRegistry('', 'docker_hub_login') {
-                    docker.push("${env.BUILD_NUMBER}")
-                    docker.push("latest")
+                script {
+                    docker.withRegistry('', 'docker_hub_login') {
+                        docker.push("${env.BUILD_NUMBER}")
+                        docker.push("latest")
+                    }
                 }
             }
         }
