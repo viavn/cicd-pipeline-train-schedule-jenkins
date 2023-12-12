@@ -49,7 +49,7 @@ pipeline {
             steps {
                 echo 'Starting to push docker image to registry'
                 sh """
-                    docker push viavn/train-schedule:${env.BUILD_NUMBER}
+                    docker push viavn/train-schedule:${env.BUILD_ID}
                     docker push viavn/train-schedule:latest
                 """
             }
