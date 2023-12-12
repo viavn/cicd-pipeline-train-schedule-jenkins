@@ -43,10 +43,10 @@ pipeline {
             }
             steps {
                 echo 'Starting to push docker image to registry'
-                script {
-                    docker.push('${env.BUILD_NUMBER}')
-                    docker.push('latest')
-                }
+                sh """
+                    docker push ${env.BUILD_NUMBER}
+                    docker push latest
+                """
             }
         }
     }
