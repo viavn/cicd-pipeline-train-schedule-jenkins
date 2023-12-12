@@ -23,7 +23,7 @@ pipeline {
             steps {
                 echo 'Starting to build docker image'
                 script {
-                    docker.build("viavn/train-schedule").inside {
+                    docker.build('viavn/train-schedule').inside {
                         // sh 'echo $(curl localhost:3000)'
                         sh('ls -lha')
                     }
@@ -36,7 +36,7 @@ pipeline {
             }
             steps {
                 echo 'Retrieve Docker registry credentials from Jenkins credentials store'
-                withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDENTIALS}", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                withCredentials([usernamePassword(credentialsId: '${DOCKER_REGISTRY_CREDENTIALS}', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                     sh('echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin')
                 }
             }
@@ -48,8 +48,8 @@ pipeline {
             steps {
                 echo 'Starting to push docker image to registry'
                 script {
-                    docker.push("${env.BUILD_NUMBER}")
-                    docker.push("latest")
+                    docker.push('${env.BUILD_NUMBER}')
+                    docker.push('latest')
                 }
             }
         }
