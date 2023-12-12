@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+*.gradle
+*gradle*
+dist
+.git
+*Dockerfile*
+*docker-compose*
+node_modules
+*.md
+test
