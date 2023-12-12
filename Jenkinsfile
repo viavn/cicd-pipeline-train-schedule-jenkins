@@ -5,10 +5,11 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Running build automation'
-                sh './gradlew myZip'
+                /* sh './gradlew myZip' */
+                sh './gradlew build'
 
-                echo 'Generating artifact'
-                archiveArtifacts artifacts: 'dist/trainSchedule.zip'
+                /*echo 'Generating artifact'
+                archiveArtifacts artifacts: 'dist/trainSchedule.zip' */
             }
         }
         stage('Build Docker Image') {
