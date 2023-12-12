@@ -24,7 +24,7 @@ pipeline {
             steps {
                 echo 'Starting to build docker image'
                 script {
-                    docker.build('viavn/train-schedule:${env.BUILD_NUMBER}').inside {
+                    docker.build("viavn/train-schedule:${env.BUILD_ID}").inside {
                         // sh 'echo $(curl localhost:3000)'
                         sh('ls -lha')
                     }
