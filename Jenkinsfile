@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_REGISTRY_CREDENTIALS = credentials('docker_hub_login')
-    }
-
     stages {
         stage('Build') {
             steps {
@@ -36,7 +32,7 @@ pipeline {
             }
             steps {
                 echo 'Retrieve Docker registry credentials from Jenkins credentials store'
-                withCredentials([usernamePassword(credentialsId: '${DOCKER_REGISTRY_CREDENTIALS}', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                withCredentials([usernamePassword(credentialsId: 'docker_hub_login', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                     sh('echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin')
                 }
             }
