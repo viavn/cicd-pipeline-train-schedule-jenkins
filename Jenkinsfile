@@ -14,11 +14,9 @@ pipeline {
                 branch 'master'
             }
             steps {
-                script {
-                    app = docker.build("viavn/train-schedule")
-                    app.inside {
-                        sh 'echo $(curl localhost:3000)'
-                    }
+                def app = docker.build("viavn/train-schedule")
+                app.inside {
+                    sh 'echo $(curl localhost:3000)'
                 }
             }
         }
@@ -27,11 +25,9 @@ pipeline {
                 branch 'master'
             }
             steps {
-                script {
-                    /* https://index.docker.io/v1/ */
-                    docker.push("${env.BUILD_NUMBER}")
-                    docker.push("latest")
-                }
+                /* https://index.docker.io/v1/ */
+                docker.push("${env.BUILD_NUMBER}")
+                docker.push("latest")
             }
         }
     }
