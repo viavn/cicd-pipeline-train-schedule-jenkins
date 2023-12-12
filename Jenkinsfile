@@ -6,6 +6,8 @@ pipeline {
             steps {
                 echo 'Running build automation'
                 sh './gradlew myZip --no-daemon'
+
+                echo 'Generating artifact'
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
@@ -14,9 +16,12 @@ pipeline {
                 branch 'master'
             }
             steps {
-                def app = docker.build("viavn/train-schedule")
-                app.inside {
-                    sh 'echo $(curl localhost:3000)'
+                echo 'Starting to build docker image'
+                script {
+                    def app = docker.build("viavn/train-schedule")
+                    app.inside {
+                        sh 'echo $(curl localhost:3000)'
+                    }
                 }
             }
         }
@@ -25,9 +30,12 @@ pipeline {
                 branch 'master'
             }
             steps {
+                echo 'Starting to push docker image to registry'
                 /* https://index.docker.io/v1/ */
-                docker.push("${env.BUILD_NUMBER}")
-                docker.push("latest")
+                script {
+                    docker.push("${env.BUILD_NUMBER}")
+                    docker.push("latest")
+                }
             }
         }
     }
