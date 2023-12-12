@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    environment {
+        dockerImageBaseName = 'train-schedule'
+        dockerImageOwner = 'viavn'
+        finalImageName = ''
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -19,7 +25,8 @@ pipeline {
             steps {
                 echo 'Starting to build docker image'
                 script {
-                    docker.build('viavn/train-schedule').inside {
+                    finalImageName = '${dockerImageOwner}/${dockerImageBaseName}'
+                    docker.build(finalImageName).inside {
                         // sh 'echo $(curl localhost:3000)'
                         sh('ls -lha')
                     }
@@ -44,8 +51,8 @@ pipeline {
             steps {
                 echo 'Starting to push docker image to registry'
                 sh """
-                    docker push ${env.BUILD_NUMBER}
-                    docker push latest
+                    docker push ${finalImageName}:${env.BUILD_NUMBER}
+                    docker push ${finalImageName}:latest
                 """
             }
         }
